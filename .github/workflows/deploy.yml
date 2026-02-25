@@ -7,6 +7,7 @@ on:
       - completed
 
 permissions:
+  contents: read
   pages: write
   id-token: write
 
@@ -14,21 +15,27 @@ jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download artifact from CI
+        uses: actions/download-artifact@v4
         with:
           name: build-files
           path: dist
+          run-id: ${{ github.event.workflow_run.id }}
 
-      - uses: actions/configure-pages@v5
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload to Pages
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
-      - id: deployment
+      - name: Deploy
+        id: deployment
         uses: actions/deploy-pages@v4
