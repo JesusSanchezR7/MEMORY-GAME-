@@ -1,4 +1,6 @@
 {
+  "homepage": "https://github.com/JesusSanchezR7/MEMORY-GAME-",
+
   "name": "prueba1",
   "private": true,
   "version": "0.0.0",
@@ -6,9 +8,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "typescript": "~5.9.3",
     "vite": "^7.3.1"
   }
